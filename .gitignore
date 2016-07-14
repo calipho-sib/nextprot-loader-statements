@@ -3,3 +3,5 @@
 .classpath
 build
 target
+.idea
+nextprot-loader-statements.iml
