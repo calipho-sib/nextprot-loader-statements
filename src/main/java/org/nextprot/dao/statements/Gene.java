@@ -1,6 +1,6 @@
 package org.nextprot.dao.statements;
 
-public class HelloMessage {
+public class Gene {
 
     private String name;
     

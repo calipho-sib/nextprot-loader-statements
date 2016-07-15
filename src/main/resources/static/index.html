@@ -1,31 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
+    <title>Raw statement Loader</title>
     <script src="sockjs-0.3.4.js"></script>
     <script src="stomp.js"></script>
     <script type="text/javascript">
         var stompClient = null;
-        
+
         function setConnected(connected) {
             document.getElementById('connect').disabled = connected;
             document.getElementById('disconnect').disabled = !connected;
             document.getElementById('conversationDiv').style.visibility = connected ? 'visible' : 'hidden';
             document.getElementById('response').innerHTML = '';
         }
-        
+
         function connect() {
-            var socket = new SockJS('/hello');
-            stompClient = Stomp.over(socket);            
+            var socket = new SockJS('/rsload');
+            stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
                 setConnected(true);
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/greetings', function(greeting){
+                stompClient.subscribe('/echo/gene', function(greeting){
                     showGreeting(JSON.parse(greeting.body).content);
                 });
             });
         }
-        
+
         function disconnect() {
             if (stompClient != null) {
                 stompClient.disconnect();
@@ -33,12 +33,12 @@
             setConnected(false);
             console.log("Disconnected");
         }
-        
-        function sendName() {
+
+        function sendGeneName() {
             var name = document.getElementById('name').value;
-            stompClient.send("/app/hello", {}, JSON.stringify({ 'name': name }));
+            stompClient.send("/app/rsload", {}, JSON.stringify({ 'name': name }));
         }
-        
+
         function showGreeting(message) {
             var response = document.getElementById('response');
             var p = document.createElement('p');
@@ -57,8 +57,8 @@
         <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
     </div>
     <div id="conversationDiv">
-        <label>What is your name?</label><input type="text" id="name" />
-        <button id="sendName" onclick="sendName();">Send</button>
+        <label>Give me a gene name ('*' for all genes)</label><input type="text" id="name" />
+        <button id="sendGeneName" onclick="sendGeneName();">Load raw statements</button>
         <p id="response"></p>
     </div>
 </div>

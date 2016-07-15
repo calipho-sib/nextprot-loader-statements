@@ -1,10 +1,10 @@
 package org.nextprot.dao.statements;
 
-public class Greeting {
+public class Message {
     
     private String content;
 
-    public Greeting(String content) {
+    public Message(String content) {
         this.content = content;
     }
 
