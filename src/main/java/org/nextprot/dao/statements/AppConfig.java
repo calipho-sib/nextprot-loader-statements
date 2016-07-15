@@ -12,4 +12,9 @@ public class AppConfig {
     public StatementLoaderService statementLoaderService() {
         return new OracleStatementLoaderServiceImpl("MAPPED_STATEMENTS_FRED");
     }
+
+    @Bean
+    public RawStatementRemoteService rawStatementRemoteService() {
+        return new RawStatementRemoteService("bioeditor");
+    }
 }
